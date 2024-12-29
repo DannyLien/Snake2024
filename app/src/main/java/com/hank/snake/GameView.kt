@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
+import kotlin.concurrent.fixedRateTimer
 
 class GameView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     var snakeBody: List<Position>? = null
@@ -14,7 +15,6 @@ class GameView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     val paint = Paint().apply {
         color = Color.BLACK
     }
-
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
