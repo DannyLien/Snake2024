@@ -32,7 +32,9 @@ class MainActivity : AppCompatActivity() {
             binding.contentView.gameView.apple = it
             binding.contentView.gameView.invalidate()
         }
-        viewModel.score.observe(this) {}
+        viewModel.score.observe(this) {
+            binding.contentView.score.text = it.toString()
+        }
         viewModel.gameState.observe(this) {
             if (it == GameState.GAME_OVER) {
                 AlertDialog.Builder(this)
@@ -49,9 +51,9 @@ class MainActivity : AppCompatActivity() {
         binding.contentView.right.setOnClickListener { viewModel.move(Direction.RIGHT) }
 
         binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null)
-                .setAnchorView(R.id.fab).show()
+//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                .setAction("Action", null)
+//                .setAnchorView(R.id.fab).show()
         }
 
     }
