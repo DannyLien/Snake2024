@@ -3,9 +3,10 @@ package com.hank.snake
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kotlin.concurrent.fixedRateTimer
-import kotlin.io.path.createTempDirectory
+import kotlin.random.Random
 
 class SnakeViewModel : ViewModel() {
+    private lateinit var applePos: Position
     var body = MutableLiveData<List<Position>>()
     var apple = MutableLiveData<Position>()
     var score = MutableLiveData<Int>()
@@ -22,6 +23,7 @@ class SnakeViewModel : ViewModel() {
         }.also {
             body.value = it
         }
+        generateApple()
         fixedRateTimer("timer", true, 500, 500) {
             val pos = snakeBody.first().copy().apply {
                 when (direction) {
@@ -36,9 +38,18 @@ class SnakeViewModel : ViewModel() {
                 }
             }
             snakeBody.add(0, pos)
-            snakeBody.removeLastOrNull()
+            if (pos != applePos) {
+                snakeBody.removeLastOrNull()
+            } else {
+                generateApple()
+            }
             body.postValue(snakeBody)
         }
+    }
+
+    fun generateApple() {
+        applePos = Position(Random.nextInt(20), Random.nextInt(20))
+        apple.postValue(applePos)
     }
 
     fun reset() {

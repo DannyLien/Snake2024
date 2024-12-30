@@ -6,19 +6,31 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
-import kotlin.concurrent.fixedRateTimer
 
 class GameView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     var snakeBody: List<Position>? = null
+    var apple: Position? = null
     var size = 0
     val gap = 3
     val paint = Paint().apply {
         color = Color.BLACK
     }
+    val paintApple = Paint().apply {
+        color = Color.RED
+    }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        canvas.run {
+        canvas?.run {
+            apple?.run {
+                drawRect(
+                    (x * size).toFloat() + gap,
+                    (y * size).toFloat() + gap,
+                    ((x + 1) * size).toFloat() - gap,
+                    ((y + 1) * size).toFloat() - gap,
+                    paintApple
+                )
+            }
             snakeBody?.forEach {
                 drawRect(
                     (it.x * size).toFloat() + gap,
