@@ -9,6 +9,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import com.hank.snake.databinding.ActivityMainBinding
 
@@ -29,7 +30,20 @@ class MainActivity : AppCompatActivity() {
         }
         viewModel.apple.observe(this) {}
         viewModel.score.observe(this) {}
+        viewModel.gameState.observe(this) {
+            if (it == GameState.GAME_OVER) {
+                AlertDialog.Builder(this)
+                    .setTitle("Game")
+                    .setMessage("Game Over")
+                    .setPositiveButton("OK", null)
+                    .show()
+            }
+        }
         viewModel.start()
+        binding.contentView.top.setOnClickListener { viewModel.move(Direction.TOP) }
+        binding.contentView.down.setOnClickListener { viewModel.move(Direction.DOWN) }
+        binding.contentView.left.setOnClickListener { viewModel.move(Direction.LEFT) }
+        binding.contentView.right.setOnClickListener { viewModel.move(Direction.RIGHT) }
 
         binding.fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)

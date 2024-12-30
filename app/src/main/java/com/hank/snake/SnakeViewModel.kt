@@ -9,6 +9,7 @@ class SnakeViewModel : ViewModel() {
     var body = MutableLiveData<List<Position>>()
     var apple = MutableLiveData<Position>()
     var score = MutableLiveData<Int>()
+    var gameState = MutableLiveData<GameState>()
     var snakeBody = mutableListOf<Position>()
     var direction = Direction.LEFT
 
@@ -29,6 +30,10 @@ class SnakeViewModel : ViewModel() {
                     Direction.TOP -> y--
                     Direction.DOWN -> y++
                 }
+                if (x < 0 || x >= 20 || y < 0 || y >= 20) {
+                    cancel()
+                    gameState.postValue(GameState.GAME_OVER)
+                }
             }
             snakeBody.add(0, pos)
             snakeBody.removeLastOrNull()
@@ -36,9 +41,13 @@ class SnakeViewModel : ViewModel() {
         }
     }
 
-    fun reset() {}
+    fun reset() {
 
-    fun move(dir: Direction) {}
+    }
+
+    fun move(dir: Direction) {
+        direction = dir
+    }
 
 
 }
@@ -50,7 +59,6 @@ data class Position(var x: Int, var y: Int)
 enum class Direction { TOP, RIGHT, LEFT, DOWN }
 
 
-
-
+enum class GameState { ONGOING, GAME_OVER }
 
 
