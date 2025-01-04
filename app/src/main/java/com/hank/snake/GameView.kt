@@ -8,16 +8,12 @@ import android.util.AttributeSet
 import android.view.View
 
 class GameView(context: Context, attrs: AttributeSet) : View(context, attrs) {
-    var snakeBody: List<Position>? = null
     var apple: Position? = null
+    val paintApple = Paint().apply { color = Color.RED }
+    var snakeBody: List<Position>? = null
     var size = 0
     val gap = 3
-    val paint = Paint().apply {
-        color = Color.BLACK
-    }
-    val paintApple = Paint().apply {
-        color = Color.RED
-    }
+    val paint = Paint().apply { color = Color.BLACK }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)

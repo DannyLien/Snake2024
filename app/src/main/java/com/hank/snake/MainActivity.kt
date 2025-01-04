@@ -51,6 +51,8 @@ class MainActivity : AppCompatActivity() {
         binding.contentView.right.setOnClickListener { viewModel.move(Direction.RIGHT) }
 
         binding.fab.setOnClickListener { view ->
+            viewModel.reset()
+            viewModel.start()
 //            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                .setAction("Action", null)
 //                .setAnchorView(R.id.fab).show()
@@ -67,7 +69,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_settings -> true
+            R.id.action_settings -> {
+                finish()
+                true
+            }
+
             else -> super.onOptionsItemSelected(item)
         }
     }

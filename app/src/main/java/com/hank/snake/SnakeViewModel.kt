@@ -2,9 +2,11 @@ package com.hank.snake
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import java.util.Timer
 import kotlin.concurrent.fixedRateTimer
 
 class SnakeViewModel : ViewModel() {
+    private lateinit var gameTimer: Timer
     var body = MutableLiveData<List<Position>>()
     var apple = MutableLiveData<Position>()
     var score = MutableLiveData<Int>()
@@ -25,7 +27,7 @@ class SnakeViewModel : ViewModel() {
             body.value = it
         }
         generateApple()
-        fixedRateTimer("timer", true, 500, 500) {
+        gameTimer = fixedRateTimer("timer", true, 300, 300) {
             val pos = snakeBody.first().copy().apply {
                 when (direction) {
                     Direction.LEFT -> x--
@@ -65,7 +67,10 @@ class SnakeViewModel : ViewModel() {
     }
 
     fun reset() {
-
+        gameTimer.cancel()
+        point = 0
+        snakeBody.clear()
+        direction = Direction.LEFT
     }
 
     fun move(dir: Direction) {
