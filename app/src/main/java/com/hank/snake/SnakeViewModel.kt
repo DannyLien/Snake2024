@@ -74,17 +74,22 @@ class SnakeViewModel : ViewModel() {
     }
 
     fun move(dir: Direction) {
-        direction = dir
+        if (dir == Direction.TOP && direction == Direction.DOWN ||
+            dir == Direction.DOWN && direction == Direction.TOP ||
+            dir == Direction.LEFT && direction == Direction.RIGHT ||
+            dir == Direction.RIGHT && direction == Direction.LEFT
+        ) {
+            return
+        } else {
+            direction = dir
+        }
     }
 
 }
 
-
 data class Position(var x: Int, var y: Int)
 
-
 enum class Direction { TOP, RIGHT, LEFT, DOWN }
-
 
 enum class GameState { ONGOING, GAME_OVER }
 

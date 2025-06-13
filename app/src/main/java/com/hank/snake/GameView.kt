@@ -11,9 +11,9 @@ class GameView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     var apple: Position? = null
     val paintApple = Paint().apply { color = Color.RED }
     var snakeBody: List<Position>? = null
+    val paint = Paint().apply { color = Color.BLACK }
     var size = 0
     val gap = 3
-    val paint = Paint().apply { color = Color.BLACK }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -37,7 +37,6 @@ class GameView(context: Context, attrs: AttributeSet) : View(context, attrs) {
             }
         }
     }
-
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
